@@ -120,7 +120,7 @@ void VRTouchProcessThread::Run()
 		// send
 		Singleton<MotorManager>::Instance().UpdateMotorData();
 		SendMotorData();
-		//Sleep(10);
+		Sleep(1);
 	}
 
 Exit:
