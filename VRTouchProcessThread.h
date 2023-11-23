@@ -12,9 +12,11 @@ public:
 private:
 	AutoPtr<Socket> socket_;
 	long long lastRecvTime_;
+	long long lastSendMotorDataTime_;
 
 	void Run();
 	void UpdateLastRecvTime();
+	void SendMotorData();
 	bool IsConnect() const;
 };
 

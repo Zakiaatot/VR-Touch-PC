@@ -5,12 +5,14 @@
 #include "Stream.h"
 #include "Package.h"
 #include "FakeRocker.h"
+#include "MotorManager.h"
 
 const size_t BUFFER_SIZE = 64;
 const long long OFFLINE_TIME = 3;
+const long long MOTOR_PACKAGE_SEND_SPACE = 500;
 
 VRTouchProcessThread::VRTouchProcessThread(AutoPtr<Socket>& socket)
-	:socket_(socket), lastRecvTime_(0)
+	:socket_(socket), lastRecvTime_(0), lastSendMotorDataTime_(0)
 {
 
 }
@@ -35,6 +37,26 @@ bool VRTouchProcessThread::IsConnect() const
 		return true;
 }
 
+void VRTouchProcessThread::SendMotorData()
+{
+	std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+	std::chrono::milliseconds timestamp =
+		std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch());
+	long long nowTime = timestamp.count();
+	if (nowTime - lastSendMotorDataTime_ > MOTOR_PACKAGE_SEND_SPACE)
+	{
+		OutStream os;
+		os << (uint16_t)PACKAGE_CMD::CHANGE_MOTOR;
+		os.Skip(sizeof(PackageHead::len_));
+		os << Singleton<MotorManager>::Instance();
+		os.RePosition(sizeof(PackageHead::cmd_));
+		uint16_t len = (uint16_t)(os.Len() - sizeof(PackageHead));
+		os << len;
+		socket_->SendN(os.Data(), (int)os.Len());
+		lastSendMotorDataTime_ = nowTime;
+	}
+}
+
 void VRTouchProcessThread::Run()
 {
 	// Todo 
@@ -53,6 +75,7 @@ void VRTouchProcessThread::Run()
 	UpdateLastRecvTime();
 	while (IsConnect())
 	{
+		// recv
 		if (socket_->IsReadAble())
 		{
 			recvN = socket_->RecvN(buf, sizeof(PackageHead));
@@ -93,6 +116,10 @@ void VRTouchProcessThread::Run()
 				goto Exit;
 			}
 		}
+
+		// send
+		Singleton<MotorManager>::Instance().UpdateMotorData();
+		SendMotorData();
 		//Sleep(10);
 	}
 
