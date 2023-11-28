@@ -32,6 +32,13 @@ InStream& InStream::operator>>(char* str)
 	return *this;
 }
 
+InStream& InStream::operator>>(uint8_t& num)
+{
+	num = *((uint8_t*)(data_ + dataPos_));
+	dataPos_ += sizeof(uint8_t);
+	return *this;
+}
+
 InStream& InStream::operator>>(uint16_t& num)
 {
 	num = *((uint16_t*)(data_ + dataPos_));

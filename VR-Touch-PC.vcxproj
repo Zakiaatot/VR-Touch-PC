@@ -130,6 +130,7 @@
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="DtmMap.cpp" />
     <ClCompile Include="FakeRocker.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MotorManager.cpp" />
     <ClCompile Include="Socket.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Config.h" />
     <ClInclude Include="DtmMap.h" />
     <ClInclude Include="FakeRocker.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="MotorManager.h" />
     <ClInclude Include="NoneCopyAble.h" />
     <ClInclude Include="Package.h" />

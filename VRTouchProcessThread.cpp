@@ -5,6 +5,7 @@
 #include "Stream.h"
 #include "Package.h"
 #include "FakeRocker.h"
+#include "Key.h"
 #include "MotorManager.h"
 
 const size_t BUFFER_SIZE = 64;
@@ -106,6 +107,12 @@ void VRTouchProcessThread::Run()
 					break;
 				case(uint16_t)PACKAGE_CMD::PING:
 					UpdateLastRecvTime();
+					break;
+				case(uint16_t)PACKAGE_CMD::REPORT_KEY:
+					uint8_t status;
+					is >> status;
+					std::cout << "KEY:" << (int)status << std::endl;
+					Singleton<Key>::Instance().Update(status);
 					break;
 				default:
 					goto Exit;

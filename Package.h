@@ -8,6 +8,7 @@ enum class PACKAGE_CMD : uint16_t
 	PING = 0x00,
 	REPORT_ROCKER = 0x01,
 	CHANGE_MOTOR = 0x02,
+	REPORT_KEY = 0x03
 };
 
 struct PackageHead

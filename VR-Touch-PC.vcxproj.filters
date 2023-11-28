@@ -45,6 +45,9 @@
     <ClCompile Include="DtmMap.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Socket.h">
@@ -84,6 +87,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="DtmMap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

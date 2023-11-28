@@ -16,6 +16,7 @@ public:
 	void RePosition(uint16_t pos);
 
 	InStream& operator>>(char* str);
+	InStream& operator>>(uint8_t& num);
 	InStream& operator>>(uint16_t& num);
 	InStream& operator>>(int& num);
 	InStream& operator>>(uint32_t& num);
